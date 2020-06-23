@@ -1,0 +1,156 @@
+(defpackage "starfish/tests/doubly-linked-list"
+  (:use #:cl
+	#:rove))
+
+(in-package "starfish/tests/doubly-linked-list")
+
+(setf *break-on-signals* nil)
+
+(deftest doubly-linked-list-creation-tests
+  (testing "Creation."
+    (let* ((default-test-size 10)
+	   (default-list (starfish:make-linked-list))
+	   (test-list (starfish:make-linked-list :size default-test-size)))
+      (ok (eql starfish:*default-maximum-list-size*
+	       (starfish:linked-list-size default-list)))
+      (ok (eql 0
+	       (starfish:linked-list-length default-list)))
+      (ok (eql default-test-size
+	       (starfish:linked-list-size test-list)))
+      (ok (eql 0
+	       (starfish:linked-list-length test-list))))))
+
+(deftest doubly-linked-list-adding-tests
+  (testing "Adding to front."
+    (let ((test-list (starfish:make-linked-list :size 5)))
+      (ok (eql 0
+	       (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "one" :front) 'starfish:linked-list))
+      (ok (eql 1 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "two" :front) 'starfish:linked-list))
+      (ok (eql 2 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "three" :front) 'starfish:linked-list))
+      (ok (eql 3 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "four" :front) 'starfish:linked-list))
+      (ok (eql 4 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "five" :front) 'starfish:linked-list))
+      (ok (eql 5 (starfish:linked-list-length test-list)))
+      (ok (signals (starfish:add-value test-list "six" :front)
+	      'starfish:linked-list-full-error))))
+  (testing "Adding to rear."
+    (let ((test-list (starfish:make-linked-list :size 5)))
+      (ok (eql 0
+	       (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "one" :rear) 'starfish:linked-list))
+      (ok (eql 1 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "two" :rear) 'starfish:linked-list))
+      (ok (eql 2 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "three" :rear) 'starfish:linked-list))
+      (ok (eql 3 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "four" :rear) 'starfish:linked-list))
+      (ok (eql 4 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "five" :rear) 'starfish:linked-list))
+      (ok (eql 5 (starfish:linked-list-length test-list)))
+      (ok (signals (starfish:add-value test-list "six" :rear)
+	      'starfish:linked-list-full-error)))))
+
+(deftest doubly-linked-list-remove-tests
+  (testing "Removing from empty list."
+    (let ((test-list (starfish:make-linked-list)))
+      (ok (eql 0
+	       (starfish:linked-list-length test-list)))
+      (ok (signals (starfish:remove-value test-list)
+	      'starfish:linked-list-empty-error))))
+  (testing "Adding to front, removing from front."
+    (let ((test-list (starfish:make-linked-list)))
+      (ok (eql 0
+	       (starfish:linked-list-length test-list)))
+      (ok (signals (starfish:remove-value test-list)
+	      'starfish:linked-list-empty-error))
+      (ok (typep (starfish:add-value test-list "one" :front) 'starfish:linked-list))
+      (ok (eql 1 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "two" :front) 'starfish:linked-list))
+      (ok (eql 2 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "three" :front) 'starfish:linked-list))
+      (ok (eql 3 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "four" :front) 'starfish:linked-list))
+      (ok (eql 4 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "five" :front) 'starfish:linked-list))
+      (ok (eql 5 (starfish:linked-list-length test-list)))
+      (ok (string= "five" (starfish:remove-value test-list :front)))
+      (ok (string= "four" (starfish:remove-value test-list :front)))
+      (ok (string= "three" (starfish:remove-value test-list :front)))
+      (ok (string= "two" (starfish:remove-value test-list :front)))
+      (ok (string= "one" (starfish:remove-value test-list :front)))
+      (ok (signals (starfish:remove-value test-list)
+	      'starfish:linked-list-empty-error))))
+  (testing "Adding to front, removing from rear."
+    (let ((test-list (starfish:make-linked-list)))
+      (ok (eql 0
+	       (starfish:linked-list-length test-list)))
+      (ok (signals (starfish:remove-value test-list)
+	      'starfish:linked-list-empty-error))
+      (ok (typep (starfish:add-value test-list "one" :front) 'starfish:linked-list))
+      (ok (eql 1 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "two" :front) 'starfish:linked-list))
+      (ok (eql 2 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "three" :front) 'starfish:linked-list))
+      (ok (eql 3 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "four" :front) 'starfish:linked-list))
+      (ok (eql 4 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "five" :front) 'starfish:linked-list))
+      (ok (eql 5 (starfish:linked-list-length test-list)))
+      (ok (string= "one" (starfish:remove-value test-list :rear)))
+      (ok (string= "two" (starfish:remove-value test-list :rear)))
+      (ok (string= "three" (starfish:remove-value test-list :rear)))
+      (ok (string= "four" (starfish:remove-value test-list :rear)))
+      (ok (string= "five" (starfish:remove-value test-list :rear)))
+      (ok (signals (starfish:remove-value test-list)
+	      'starfish:linked-list-empty-error))))
+  (testing "Adding to rear, removing from front."
+    (let ((test-list (starfish:make-linked-list)))
+      (ok (eql 0
+	       (starfish:linked-list-length test-list)))
+      (ok (signals (starfish:remove-value test-list)
+	      'starfish:linked-list-empty-error))
+      (ok (typep (starfish:add-value test-list "one" :rear) 'starfish:linked-list))
+      (ok (eql 1 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "two" :rear) 'starfish:linked-list))
+      (ok (eql 2 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "three" :rear) 'starfish:linked-list))
+      (ok (eql 3 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "four" :rear) 'starfish:linked-list))
+      (ok (eql 4 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "five" :rear) 'starfish:linked-list))
+      (ok (eql 5 (starfish:linked-list-length test-list)))
+      (ok (string= "one" (starfish:remove-value test-list :front)))
+      (ok (string= "two" (starfish:remove-value test-list :front)))
+      (ok (string= "three" (starfish:remove-value test-list :front)))
+      (ok (string= "four" (starfish:remove-value test-list :front)))
+      (ok (string= "five" (starfish:remove-value test-list :front)))
+      (ok (signals (starfish:remove-value test-list)
+	      'starfish:linked-list-empty-error))))
+  (testing "Adding to rear, removing from rear."
+    (let ((test-list (starfish:make-linked-list)))
+      (ok (eql 0
+	       (starfish:linked-list-length test-list)))
+      (ok (signals (starfish:remove-value test-list)
+	      'starfish:linked-list-empty-error))
+      (ok (typep (starfish:add-value test-list "one" :rear) 'starfish:linked-list))
+      (ok (eql 1 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "two" :rear) 'starfish:linked-list))
+      (ok (eql 2 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "three" :rear) 'starfish:linked-list))
+      (ok (eql 3 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "four" :rear) 'starfish:linked-list))
+      (ok (eql 4 (starfish:linked-list-length test-list)))
+      (ok (typep (starfish:add-value test-list "five" :rear) 'starfish:linked-list))
+      (ok (eql 5 (starfish:linked-list-length test-list)))
+      (ok (string= "five" (starfish:remove-value test-list :rear)))
+      (ok (string= "four" (starfish:remove-value test-list :rear)))
+      (ok (string= "three" (starfish:remove-value test-list :rear)))
+      (ok (string= "two" (starfish:remove-value test-list :rear)))
+      (ok (string= "one" (starfish:remove-value test-list :rear)))
+      (ok (signals (starfish:remove-value test-list)
+	      'starfish:linked-list-empty-error)))))
+
