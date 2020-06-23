@@ -6,8 +6,8 @@
 
 (setf *break-on-signals* nil)
 
-(deftest time-tests
-  (testing "seconds"
+(deftest time-units-tests
+  (testing "Units"
     (ok (eql 0
 	    (starfish:time-interval-in-seconds :seconds 0)))
     (ok (eql 60

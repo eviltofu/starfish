@@ -7,6 +7,8 @@
    #:linked-list-position-type
    ;;; time
    #:time-interval-in-seconds
+   #:offset-from-time
+   #:offset-from-now
    #:days
    #:hours
    #:minutes
