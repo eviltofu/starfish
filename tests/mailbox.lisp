@@ -22,11 +22,11 @@
       (ok (string= "three" (starfish:mailbox-read mailbox :timeout nil)))))
   (testing "Time outs"
     (let ((mailbox (starfish:make-mailbox :size 2)))
-      (ok (signals (starfish:mailbox-read mailbox :timeout 1)
+      (ok (signals (starfish:mailbox-read mailbox :timeout (starfish:seconds 1))
 	      'bt:timeout))
       (starfish:mailbox-write mailbox "one")
       (starfish:mailbox-write mailbox "two")
-      (ok (signals (starfish:mailbox-write mailbox "three" :timeout 1)
+      (ok (signals (starfish:mailbox-write mailbox "three" :timeout (starfish:seconds 1))
 	      'bt:timeout))))
   (testing "Multiple threads"
     (let* ((max-count 1000)
@@ -44,7 +44,6 @@
 	   three-writer-thread
 	   four-writer-thread
 	   reader-thread)
-      (setf starfish:*default-timeout* 2)
       (setf one-writer-thread
 	    (bt:make-thread
 	     (lambda ()
