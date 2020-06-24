@@ -47,6 +47,7 @@
 (declaim (ftype (function (mailbox t &key (:timeout (or null non-negative-integer-type))) mailbox) mailbox-write))
 (defun mailbox-write (mailbox message &key (timeout *default-timeout*))
   "Write the message to the mail box, given a time out. 
+This function is safe for multithreaded access.
 When the time out expires, a bt:timeout error is signaled. 
 If the time out is nil, the function will block until space is available in the mailbox.
 If the time out is not specified, the default time out is used."
@@ -57,6 +58,7 @@ If the time out is not specified, the default time out is used."
 (declaim (ftype (function (mailbox &key (:timeout (or null non-negative-integer-type))) t) mailbox-read))
 (defun mailbox-read (mailbox &key (timeout *default-timeout*))
   "Read from the mail box and return a message, given a time out.
+This function is safe for multithreaded access.
 When the time out expires, a bt:error error is signaled.
 If the time out is nil, the function will block until a message is available in the mailbox.
 If the time out is not specified, the default time out is used."
