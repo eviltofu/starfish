@@ -69,13 +69,15 @@
 
 (declaim (ftype (function (&key (:size positive-integer-type)) linked-list) make-linked-list))
 (defun make-linked-list (&key (size *default-maximum-list-size*))
-  "Make a linked list. Size determines how many nodes can be in the list. If no size is given, a default size is used."
+  "Make a linked list. 
+Size determines how many nodes can be in the list. 
+If no size is given, a default size is used."
   (let ((created-linked-list (make-instance 'linked-list :size size)))
     created-linked-list))
 
 (declaim (ftype (function (linked-list t &optional linked-list-position-type) linked-list) add-value))
 (defun add-value (linked-list value &optional (position :rear))
-  "Adds something to the linked list.
+  "Adds something to the linked list. This add process is not safe for multithreaded access.
 You can specify which end of the list the value is added to via :front or :rear symbols.
 If you specify an unknown symbol, the function will signal an unknown-position-error.
 If the list is at maximum capacity (length == size), the function will signal a linked-list-full-error."
@@ -92,9 +94,9 @@ If the list is at maximum capacity (length == size), the function will signal a 
 
 (declaim (ftype (function (linked-list &optional linked-list-position-type) t) remove-value))
 (defun remove-value (linked-list &optional (position :front))
-  "Remove something from the linked list. 
+  "Remove something from the linked list. This remove process is not safe for multithreaded access.
 You can specify which end of the list the value is removed from via :front or :rear symbols.
-If the list is empty, linked-list-empty-error is signaled. "
+If the list is empty, the function will signal a linked-list-empty-error."
   (cond
     ((linked-list-empty-p linked-list)
      (error 'linked-list-empty-error :linked-list linked-list))
