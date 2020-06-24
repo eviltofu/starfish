@@ -1,5 +1,15 @@
 (in-package #:starfish)
 
+
+(declaim (type (non-negative-integer-type) +days-in-seconds+))
+(defconstant +days-in-seconds+ 86400)
+
+(declaim (type (non-negative-integer-type) +hours-in-seconds+))
+(defconstant +hours-in-seconds+ 3600)
+
+(declaim (type (non-negative-integer-type) minutes-in-seconds))
+(defconstant +minutes-in-seconds+ 60)
+
 (declaim
  (ftype (function
 	 (&key (:days non-negative-integer-type)
@@ -44,15 +54,15 @@
 
 (declaim (ftype (function (non-negative-integer-type) non-negative-integer-type) days))
 (defun days (var)
-  (* var 24 60 60))
+  (* var +days-in-seconds+))
 
 (declaim (ftype (function (non-negative-integer-type) non-negative-integer-type) hours))
 (defun hours (var)
-  (* var 60 60))
+  (* var +hours-in-seconds+))
 
 (declaim (ftype (function (non-negative-integer-type) non-negative-integer-type) minutes))
 (defun minutes (var)
-  (* var 60))
+  (* var +minutes-in-seconds+))
 
 (declaim (ftype (function (non-negative-integer-type) non-negative-integer-type) seconds))
 (defun seconds (var)

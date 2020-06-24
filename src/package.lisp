@@ -13,6 +13,9 @@
    #:hours
    #:minutes
    #:seconds
+   #:+days-in-seconds+
+   #:+hours-in-seconds+
+   #:+minutes-in-seconds+
    ;;; doubly-linked list
    #:linked-list
    #:make-linked-list

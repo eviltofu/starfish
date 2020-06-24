@@ -29,7 +29,7 @@
       (ok (signals (starfish:mailbox-write mailbox "three" :timeout (starfish:seconds 1))
 	      'bt:timeout))))
   (testing "Multiple threads"
-    (let* ((max-count 1000)
+    (let* ((max-count 10000)
 	   (mailbox (starfish:make-mailbox :size 2))
 	   (ones 0)
 	   (twos 0)
