@@ -16,7 +16,8 @@
 		 (:file "types")
 		 (:file "time")
 		 (:file "doubly-linked-list")
-		 (:file "mailbox"))))
+		 (:file "mailbox")
+		 (:file "actor"))))
   :in-order-to ((test-op (test-op "starfish/tests"))))
 
 (defsystem "starfish/tests"
@@ -28,5 +29,5 @@
 		((:file "time")
 		 (:file "doubly-linked-list")
 		 (:file "mailbox")
-		 )))
+		 (:file "actor"))))
   :perform (test-op (op c) (symbol-call :rove :run c)))

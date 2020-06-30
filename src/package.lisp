@@ -1,11 +1,11 @@
 (defpackage #:starfish
   (:use #:cl)
   (:export
-   ;;; types
+;;; types
    #:non-negative-integer-type
    #:positive-integer-type
    #:linked-list-position-type
-   ;;; time
+;;; time
    #:time-interval-in-seconds
    #:offset-from-time
    #:offset-from-now
@@ -16,7 +16,7 @@
    #:+days-in-seconds+
    #:+hours-in-seconds+
    #:+minutes-in-seconds+
-   ;;; doubly-linked list
+;;; doubly-linked list
    #:linked-list
    #:make-linked-list
    #:linked-list-size
@@ -29,15 +29,22 @@
    #:unknown-position-error
    #:linked-list-full-error
    #:linked-list-empty-error
-   ;;; mailbox
+;;; mailbox
    #:mailbox
    #:make-mailbox
    #:mailbox-write
    #:mailbox-read
    #:*default-mailbox-size*
    #:*default-timeout*
-   ;;; address
-   ;;; postal service
+;;; actor
+   #:actor
+   #:start
+   #:stop
+   #:is-running-p
+   #:send-message
+   #:make-actor
+;;; address
+;;; postal service
    ))
 
 
