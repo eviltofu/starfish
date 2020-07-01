@@ -9,7 +9,7 @@
 
 ;;; Conditions
 
-(define-condition unknown-position-error (error)
+(define-condition linked-list-unknown-position-error (error)
   ((position
     :initarg :position)))
 
@@ -90,7 +90,7 @@ If the list is at maximum capacity (length == size), the function will signal a 
      (add-to-rear linked-list value))
     ((eql position :front)
      (add-to-front linked-list value))
-    (t (error 'unknown-position-error :position position))))
+    (t (error 'linked-list-unknown-position-error :position position))))
 
 (declaim (ftype (function (linked-list &optional linked-list-position-type) t) remove-value))
 (defun remove-value (linked-list &optional (position :front))
@@ -106,7 +106,7 @@ If the list is empty, the function will signal a linked-list-empty-error."
      (remove-from-rear linked-list))
     ((eql position :front)
      (remove-from-front linked-list))
-    (t (error 'unknown-position-error :position position))))
+    (t (error 'linked-list-unknown-position-error :position position))))
 
 (declaim (ftype (function (linked-list) (or null t)) linked-list-empty-p))
 (defun linked-list-empty-p (linked-list)
