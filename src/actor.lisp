@@ -70,17 +70,20 @@ True values means the actor stops.")
 (defmethod send-message ((actor actor) message)
   )
 
-(declaim (ftype (function (&key
-			   (:process-mailbox-function
-			    (function (t) (values t boolean))) 
-			   (:mailbox-size
-			    positive-integer-type) 
-			   (:process-time-out-function
-			    (or (function (t) (values t boolean)) nil) ) 
-			   (:time-out-interval-in-seconds
-			    (or positive-integer-type nil)))
-			  actor)
-		make-actor))
+(declaim
+ (ftype
+  (function
+   (&key
+    (:process-mailbox-function
+     (function (t) (values t boolean))) 
+    (:mailbox-size
+     positive-integer-type) 
+    (:process-time-out-function
+     (or (function (t) (values t boolean)) nil) ) 
+    (:time-out-interval-in-seconds
+     (or positive-integer-type nil)))
+   actor)
+  make-actor))
 (defun make-actor (&key
 		     (process-mailbox-function)
 		     (mailbox-size *default-mailbox-size*)
